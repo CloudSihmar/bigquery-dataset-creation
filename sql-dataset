@@ -1,0 +1,9 @@
+create schema demo_dataset
+options(location='asia-south1');
+
+CREATE TABLE demo_dataset.students (
+  name STRING,
+  age INT64,
+  subjects ARRAY<STRING>,
+  marks ARRAY<INT64>
+);
