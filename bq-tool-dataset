@@ -1,0 +1,12 @@
+bq --location=asia-south1 mk \
+--dataset \
+--default_table_expiration=3600 \
+--description="this is a demo dataset" \
+techlanders-internal:demo_dataset_new
+
+bq mk \
+--table \
+--expiration 3600 \
+--description "this is a demo table" \
+demo_dataset_new.students \
+name:STRING,age:INT64,subjects:STRING,marks:INT64
