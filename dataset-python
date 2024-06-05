@@ -1,0 +1,40 @@
+from google.cloud import bigquery
+
+# Replace with your project ID
+project_id = 'techlanders-internal'
+# Define the dataset and table details
+dataset_id = 'demo_data'
+table_id = 'students'
+location = 'asia-south1'
+
+# Initialize a BigQuery client
+client = bigquery.Client(project=project_id)
+
+# Create the dataset
+dataset_ref = client.dataset(dataset_id)
+dataset = bigquery.Dataset(dataset_ref)
+dataset.location = location
+
+try:
+    client.create_dataset(dataset)  # API request
+    print(f"Created dataset {client.project}.{dataset.dataset_id}")
+except Exception as e:
+    print(f"Dataset creation failed: {e}")
+
+# Define the table schema
+schema = [
+    bigquery.SchemaField('name', 'STRING', mode='REQUIRED'),
+    bigquery.SchemaField('age', 'INT64', mode='REQUIRED'),
+    bigquery.SchemaField('subjects', 'STRING', mode='REPEATED'),
+    bigquery.SchemaField('marks', 'INT64', mode='REPEATED'),
+]
+
+# Create the table
+table_ref = dataset_ref.table(table_id)
+table = bigquery.Table(table_ref, schema=schema)
+
+try:
+    client.create_table(table)  # API request
+    print(f"Created table {client.project}.{dataset_id}.{table_id}")
+except Exception as e:
+    print(f"Table creation failed: {e}")
